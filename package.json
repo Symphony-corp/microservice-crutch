@@ -1,15 +1,15 @@
 {
-  "name": "microservice-crutch",
+  "name": "ih-microservice",
   "version": "0.0.7",
   "description": "Makes it easy to write a micro-service with medseek-util-microservices+AMQP.",
   "main": "./crutch.js",
-  "repository": "https://github.com/fwestrom/microservice-crutch.git",
+  "repository": "https://github.com/medseek-engineering/microservice-crutch.git",
   "dependencies": {
     "amqplib": "^0.3.0",
     "bluebird": "^2.3.11",
     "lodash": "^2.4.1",
     "log4js": "^0.6.21",
-    "medseek-util-microservices": "^0.1.0",
+    "ih-util-microservices": "0.1.2",
     "minimist": "^1.1.0",
     "node-uuid": "^1.4.2"
   },
