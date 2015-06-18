@@ -1,7 +1,7 @@
 {
   "name": "ih-microservice",
   "version": "0.0.7",
-  "description": "Makes it easy to write a micro-service with medseek-util-microservices+AMQP.",
+  "description": "Makes it easy to write a micro-service with ih-util-microservices+AMQP.",
   "main": "./crutch.js",
   "repository": "https://github.com/medseek-engineering/microservice-crutch.git",
   "dependencies": {

@@ -1,7 +1,7 @@
 # microservice-crutch
 
 Provides a jump-start on implementing a micro-service compatible with
-micro-services using AMQP and the medseek-util-microservices module.
+micro-services using AMQP and the ih-util-microservices module.
 
 This is a fork of the open-source project by the same name that I started while at Influence Health.
 You can check out the original at https://github.com/medseek-engineering/microservice-crutch.

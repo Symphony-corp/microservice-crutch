@@ -2,9 +2,9 @@
 
 module.exports = function microservices(_, app, inject, logging, options) {
     var log = logging.getLogger('microservice-crutch.microservices');
-    log.debug('Initializing medseek-util-microservices module.');
+    log.debug('Initializing ih-util-microservices module.');
 
-    return inject.resolve('medseek-util-microservices')
+    return inject.resolve('ih-util-microservices')
         .then(function(microservices) {
             return inject(microservices);
         })
@@ -40,7 +40,7 @@ module.exports = function microservices(_, app, inject, logging, options) {
     }
 
     function onShutdown(ms, transport) {
-        log.debug('Shutting down medseek-util-microservices module.');
+        log.debug('Shutting down ih-util-microservices module.');
         ms.removeListener('error', onError);
         transport.removeListener('error', onError);
         ms.dispose();

@@ -1,6 +1,6 @@
 var crutch = require('../crutch.js');
 var defaults = {
-    // medseek-util-microservices options
+    // ih-util-microservices options
     defaultExchange: 'topic://example',
     defaultQueue: 'ping-sender',
     defaultReturnBody: true, // false returns message-context from .call/etc

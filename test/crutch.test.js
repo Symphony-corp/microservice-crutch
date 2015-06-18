@@ -48,13 +48,13 @@ describe('crutch', function() {
             bindReply: function() { return Promise.resolve(); },
             call: function() { return Promise.resolve(); },
             send: function() { return Promise.resolve(); },
-            AmqpTransport: function AmqpTransport(options) { return {}; },
+            AmqpTransport: function AmqpTransport(options) { return { on: function(e){}, removeListener: function(e){}}; },
             useTransport: function() { return Promise.resolve(); },
             dispose: function() {},
         });
 
         crutch = _.partial(proxyquire('../crutch.js', {
-            'medseek-util-microservices': _.extend(function(options, serializer) {
+            'ih-util-microservices': _.extend(function(options, serializer) {
                 return ms;
             }, {
                 '@noCallThru': false,
