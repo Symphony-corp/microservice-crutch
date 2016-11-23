@@ -7,11 +7,11 @@
   "dependencies": {
     "amqplib": "^0.3.0",
     "bluebird": "^2.3.11",
+    "ih-util-microservices": "0.1.2",
     "lodash": "^2.4.1",
     "log4js": "^0.6.21",
-    "ih-util-microservices": "0.1.2",
     "minimist": "^1.1.0",
-    "node-uuid": "^1.4.2"
+    "uuid": "^3.0.0"
   },
   "devDependencies": {
     "gulp": "^3.8.9",
