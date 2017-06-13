@@ -24,7 +24,7 @@ module.exports = function crutch(defaultOptions, callback) {
         app: new events.EventEmitter(),
         defaultOptions: defaultOptions,
         Promise: Promise,
-        uuid: require('node-uuid'),
+        uuid: require('uuid'),
         serializer: require('ih-util-microservices/serializer'),
         'ih-util-microservices': medseekUtilMicroservices,
     }, defaultOptions.injectables));
