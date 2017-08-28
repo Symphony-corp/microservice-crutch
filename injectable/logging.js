@@ -3,13 +3,21 @@
 module.exports = function logging(log4js, options) {
 
 	var config = options.log.config || {
-		appenders: [{
-			type: 'console'
-		}],
-		levels: {
-			'[all]': options.log.level
+		appenders: {
+			out: {
+				type: 'stdout',
+				layout: {
+					type: 'pattern',
+					pattern: '[%d] [%p] [%c] [tracking:%X{tracking}] %m%n'
+				}
+			}
 		},
-		replaceConsole: options.log.replaceConsole === true,
+		categories: {
+			default: {
+				appenders: ['out'],
+				level: options.log.level
+			}
+		}
 	};
 
 	var opts = {
