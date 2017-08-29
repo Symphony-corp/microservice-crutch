@@ -15,6 +15,7 @@ module.exports = function microservices(_, app, inject, logging, options) {
           app.once('shutdown-last', shutdownHandler);
           ms.on('error', onError);
           transport.on('error', onError);
+          transport.on('warn', onWarn);
           return ms.useTransport(transport, options);
         })
         .return(ms);
@@ -31,11 +32,16 @@ module.exports = function microservices(_, app, inject, logging, options) {
     });
 
   function onError(error) {
+    log.error(error);
     if (app.listeners('error').length > 0) {
       return _.partial(app.emit, 'error').apply(app, arguments);
     } else {
       throw error;
     }
+  }
+
+  function onWarn(message){
+    log.warn(message);
   }
 
   function onShutdown(ms, transport) {
