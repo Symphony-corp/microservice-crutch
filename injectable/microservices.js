@@ -16,6 +16,10 @@ module.exports = function microservices(_, app, inject, logging, options) {
           ms.on('error', onError);
           transport.on('error', onError);
           transport.on('warn', onWarn);
+          transport.on('receive-message', onReceiveMessage);
+          transport.on('receive-reply', onReceiveReply);
+          transport.on('send-message', onSendMessage);
+          transport.on('send-reply', onSendReply);
           return ms.useTransport(transport, options);
         })
         .return(ms);
@@ -44,10 +48,31 @@ module.exports = function microservices(_, app, inject, logging, options) {
     log.warn(message);
   }
 
+  function onReceiveMessage(messageContext){
+    log.info('Received message.', messageContext);
+  }
+
+  function onSendReply(messageContext){
+    log.info('Sending reply.', messageContext);
+  }
+
+  function onReceiveReply(messageContext){
+    log.debug('Received reply.', messageContext);
+  }
+
+  function onSendMessage(messageContext){
+    log.debug('Sending message.', messageContext);
+  }
+
   function onShutdown(ms, transport) {
     log.debug('Shutting down ih-util-microservices module.');
     ms.removeListener('error', onError);
     transport.removeListener('error', onError);
+    transport.removeListener('warn', onWarn);
+    transport.removeListener('receive-message', onReceiveMessage);
+    transport.removeListener('receive-reply', onReceiveReply);
+    transport.removeListener('send-message', onSendMessage);
+    transport.removeListener('send-reply', onSendReply);
     ms.dispose();
   }
 };
