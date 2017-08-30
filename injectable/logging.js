@@ -32,7 +32,10 @@ module.exports = function logging(log4js, options) {
       if (!struct.tracking) {
         struct.tracking = null;
       }
-      struct.message = struct.message || messageData[0] || null;
+      if (!struct.message) {
+        struct.message = messageData[0] || null;
+        messageData = messageData.slice(1);
+      }
       struct.messageData = messageData;
       return JSON.stringify(struct) + config.separator;
     };
