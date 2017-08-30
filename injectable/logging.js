@@ -1,9 +1,10 @@
 'use strict';
 var path = require('path');
+var os = require('os');
 
 module.exports = function logging(log4js, options) {
 
-  log4js.addLayout('ih-structured-json', function (config) {
+  log4js.addLayout('ih-structured-json', function () {
 
     var componentName = path.basename(process.mainModule.filename, '.js');
 
@@ -37,7 +38,7 @@ module.exports = function logging(log4js, options) {
         messageData = messageData.slice(1);
       }
       struct.messageData = messageData;
-      return JSON.stringify(struct) + config.separator;
+      return JSON.stringify(struct) + os.EOL;
     };
 
     function isMessageContext(datum) {
@@ -57,8 +58,7 @@ module.exports = function logging(log4js, options) {
       out: {
         type: 'stdout',
         layout: {
-          type: 'ih-structured-json',
-          separator: ','
+          type: 'ih-structured-json'
         }
       }
     },
