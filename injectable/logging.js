@@ -1,25 +1,83 @@
 'use strict';
+var path = require('path');
+var os = require('os');
 
 module.exports = function logging(log4js, options) {
 
-    var config = options.log.config || {
-        appenders: [
-            { type: 'console' }
-        ],
-        levels: {
-            '[all]': options.log.level
-        },
-        replaceConsole: options.log.replaceConsole === true,
+  log4js.addLayout('ih-structured-json', function () {
+
+    var componentName = path.basename(process.mainModule.filename, '.js');
+
+    return function convertToStructuredJson(logEvent) {
+      var struct = {
+        timestamp: logEvent.startTime,
+        component: componentName,
+        level: logEvent.level.levelStr,
+        pid: logEvent.pid
+      };
+      var messageData = [];
+      logEvent.data.forEach(function (datum) {
+        if (isErrorObject(datum)) {
+          struct.message = datum.message;
+          messageData.push(datum.stack);
+        } else if (isMessageContext(datum)) {
+          struct.tracking = datum.properties.tracking;
+          struct.context = datum.routingKey;
+        } else {
+          messageData.push(datum);
+        }
+      });
+      if (!struct.context) {
+        struct.context = logEvent.categoryName;
+      }
+      if (!struct.tracking) {
+        struct.tracking = null;
+      }
+      if (!struct.message) {
+        struct.message = messageData[0] || null;
+        messageData = messageData.slice(1);
+      }
+      struct.messageData = messageData;
+      return JSON.stringify(struct) + os.EOL;
     };
 
-    var opts = {
-        reloadSecs: options.log.refresh
-    };
+    function isMessageContext(datum) {
+      return (typeof datum === 'object') &&
+        (datum.properties !== undefined);
+    }
 
-    log4js.configure(config, opts);
+    function isErrorObject(datum) {
+      return (typeof datum === 'object') &&
+        (datum.message !== undefined) &&
+        (datum.stack !== undefined);
+    }
+  });
 
-    var log = log4js.getLogger('microservice-crutch.logging');
-    log.debug('Configured log4js; config:', config, '\n opts:', opts);
+  var config = options.log.config || {
+    appenders: {
+      out: {
+        type: 'stdout',
+        layout: {
+          type: 'ih-structured-json'
+        }
+      }
+    },
+    categories: {
+      default: {
+        appenders: ['out'],
+        level: options.log.level
+      }
+    }
+  };
 
-    return log4js;
+  var opts = {
+    reloadSecs: options.log.refresh
+  };
+
+  log4js.configure(config, opts);
+
+  var log = log4js.getLogger('microservice-crutch.logging');
+  log.debug('Configured log4js; config:', config, '\n opts:', opts);
+
+  return log4js;
 };
