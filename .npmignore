@@ -2,3 +2,5 @@
 .npmignore
 examples
 test
+
+.editorconfig
