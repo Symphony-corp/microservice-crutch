@@ -16,6 +16,7 @@ module.exports = function microservices(_, app, inject, logging, options) {
           ms.on('error', onError);
           transport.on('error', onError);
           transport.on('warn', onWarn);
+          transport.on('info', onInfo);
           transport.on('receive-message', onReceiveMessage);
           transport.on('receive-reply', onReceiveReply);
           transport.on('send-message', onSendMessage);
@@ -37,30 +38,29 @@ module.exports = function microservices(_, app, inject, logging, options) {
 
   function onError(error) {
     log.error(error);
-    if (app.listeners('error').length > 0) {
-      return _.partial(app.emit, 'error').apply(app, arguments);
-    } else {
-      throw error;
-    }
   }
 
-  function onWarn(message){
+  function onWarn(message) {
     log.warn(message);
   }
 
-  function onReceiveMessage(messageContext){
+  function onInfo(message) {
+    log.info(message);
+  }
+
+  function onReceiveMessage(messageContext) {
     log.info('Received message.', messageContext);
   }
 
-  function onSendReply(messageContext){
+  function onSendReply(messageContext) {
     log.info('Sending reply.', messageContext);
   }
 
-  function onReceiveReply(messageContext){
+  function onReceiveReply(messageContext) {
     log.debug('Received reply.', messageContext);
   }
 
-  function onSendMessage(messageContext){
+  function onSendMessage(messageContext) {
     log.debug('Sending message.', messageContext);
   }
 
@@ -69,6 +69,7 @@ module.exports = function microservices(_, app, inject, logging, options) {
     ms.removeListener('error', onError);
     transport.removeListener('error', onError);
     transport.removeListener('warn', onWarn);
+    transport.removeListener('info', onInfo);
     transport.removeListener('receive-message', onReceiveMessage);
     transport.removeListener('receive-reply', onReceiveReply);
     transport.removeListener('send-message', onSendMessage);
