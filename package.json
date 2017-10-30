@@ -1,6 +1,6 @@
 {
   "name": "ih-microservice",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "license": "UNLICENSED",
   "description": "Makes it easy to write a micro-service with ih-util-microservices+AMQP.",
   "main": "./crutch.js",
