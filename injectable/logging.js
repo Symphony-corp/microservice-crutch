@@ -12,29 +12,27 @@ module.exports = function logging(log4js, options) {
       var struct = {
         timestamp: logEvent.startTime,
         component: componentName,
+        name: logEvent.categoryName,
         level: logEvent.level.levelStr,
         pid: logEvent.pid
       };
       var messageData = [];
       logEvent.data.forEach(function (datum) {
         if (isErrorObject(datum)) {
-          struct.message = datum.message;
+          struct.msg = datum.message;
           messageData.push(datum.stack);
         } else if (isMessageContext(datum)) {
           struct.tracking = datum.properties.tracking;
-          struct.context = datum.routingKey;
+          struct.route = datum.routingKey;
         } else {
           messageData.push(datum);
         }
       });
-      if (!struct.context) {
-        struct.context = logEvent.categoryName;
-      }
       if (!struct.tracking) {
         struct.tracking = null;
       }
-      if (!struct.message) {
-        struct.message = messageData[0] || null;
+      if (!struct.msg) {
+        struct.msg = messageData[0] || null;
         messageData = messageData.slice(1);
       }
       struct.messageData = messageData;

@@ -49,11 +49,11 @@ module.exports = function microservices(_, app, inject, logging, options) {
   }
 
   function onReceiveMessage(messageContext) {
-    log.info('Received message.', messageContext);
+    log.info('MsRequest', messageContext);
   }
 
   function onSendReply(messageContext) {
-    log.info('Sending reply.', messageContext);
+    log.info('MsResponse', messageContext);
   }
 
   function onReceiveReply(messageContext) {
