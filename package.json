@@ -1,10 +1,10 @@
 {
-  "name": "ih-microservice",
+  "name": "sc-microservice",
   "version": "0.8.0",
   "license": "UNLICENSED",
   "description": "Makes it easy to write a micro-service with ih-util-microservices+AMQP.",
   "main": "./crutch.js",
-  "repository": "https://github.com/medseek-engineering/microservice-crutch.git",
+  "repository": "https://github.com/Symphony-corp/microservice-crutch.git",
   "dependencies": {
     "amqplib": "^0.5.1",
     "bluebird": "^3.5.0",
